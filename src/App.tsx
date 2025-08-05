@@ -8,7 +8,7 @@ import PageTransition from './components/PageTransition';
 
 // Pages
 import Login from './pages/login';
-import Register from './pages/register';
+import Auth from './pages/register';
 import Dashboard from './pages/dashboard';
 import Transactions from './pages/transactions';
 import AddTransaction from './pages/newTransactions';
@@ -37,7 +37,7 @@ export default function App() {
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<Auth />} />
           
           <Route element={<MainLayout />}>
             <Route path="/" element={<Navigate to="/dashboard" />} />
