@@ -17,6 +17,7 @@ const Login = () => {
               placeholder="password"
               name="password"
               required
+              type="password"
             />
           </div>
           <Button label="Register"/>

@@ -1,4 +1,7 @@
 import AddNew from "../components/Addnew";
+import { useEffect, useState } from "react";
+import type { Transaction } from "../types/transactions";
+import supabase from "../../utils/supabase";
 
 const defaultTransactions = [
   { name: 'Transport', type: 'expense' },
@@ -7,6 +10,24 @@ const defaultTransactions = [
 ];
 
 const Transactions = () => {
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      const { data, error } = await supabase.from('Transactions').select('*');
+
+      if (error) {
+        console.log("Error fetching transactions: ", error.message);
+        return;
+      }
+      else setTransactions(data);
+    };
+     
+    fetchTransactions();
+  },[supabase]);
+
+  console.log("Transactions: ", transactions);
+
   return (
     <div className="relative w-full bg-amber-900/5 flex flex-col items-start justify-start min-h-screen pt-40 px-40">
       <div className="fixed bottom-30 right-40 z-10">
@@ -31,9 +52,9 @@ const Transactions = () => {
                     <span className="text-center">Transaction</span>
                 </th>
                 <th className="w-1/4 px-8 py-6 text-left font-semibold text-white text-sm uppercase tracking-wider">
-                    <span className="text-center">Ammount</span>
+                    <span className="text-center">Amount</span>
                 </th>
-                <th className="w-1/3 px-8 py-6 text-center font-semibold text-white text-sm uppercase tracking-wider">
+                <th className="w-1/4 px-8 py-6 text-center font-semibold text-white text-sm uppercase tracking-wider">
                     <span className="text-center">Type</span>
                 </th>
               </tr>
@@ -55,12 +76,12 @@ const Transactions = () => {
                       </div>
                     </div>
                   </td>
-                  <td className="px-8 py-6 w-1/3 text-left">
+                  <td className="px-8 py-6 w-1/4 text-left">
                     <div className="count-badge text-black font-bold py-2 rounded-lg inline-block min-w-[60px]">
                       Rp.000.000
                     </div>
                   </td>
-                  <td className="px-8 py-6 w-1/3 text-center">
+                  <td className="px-8 py-6 w-1/4 text-center">
                     <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${
                       transaction.type.toLowerCase() === 'expense' 
                         ? 'bg-red-500/20 text-red-700 border-red-500/30'

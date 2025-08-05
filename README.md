@@ -1,1 +1,1 @@
-tes
+not using policy from supabase, no rls also, still fetching all data from transactions.
